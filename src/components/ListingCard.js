@@ -11,6 +11,15 @@ function ListingCard({ listing }) {
 
     onIsLikedChanged()
   }
+
+  function handleDelete(e) {
+    console.log(e.target.id)
+    const deletedListing = e.target.id
+    return (
+    fetch( `http://localhost:6001/listings/${deletedListing}`), {
+    method: "DELETE"}
+    )
+  }
   
   return (
     <li className="card">
@@ -26,7 +35,7 @@ function ListingCard({ listing }) {
         )}
         <strong>{description}</strong>
         <span> · {location}</span>
-        <button className="emoji-button delete">🗑</button>
+        <button onClick={handleDelete} className="emoji-button delete" id={listing.id}>🗑</button>
       </div>
     </li>
   );
