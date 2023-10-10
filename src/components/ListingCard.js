@@ -1,24 +1,20 @@
 import React, {useState} from "react";
 
-function ListingCard({ listing }) {
+function ListingCard({ listing, removeListing }) {
   const [isLiked, setIsLiked] = useState(false)
-  const {description, image, location} = listing
+  const {id, description, image, location} = listing
 
-  function onIsLikedChanged() {
-    setIsLiked((currentState) => !currentState)
+  const onIsLikedChanged = () => {
+    setIsLiked(!isLiked)
   }
-  function handleLikeClick() {
 
+  function handleLikeClick() {
     onIsLikedChanged()
   }
 
-  function handleDelete(e) {
-    console.log(e.target.id)
-    const deletedListing = e.target.id
-    return (
-    fetch( `http://localhost:6001/listings/${deletedListing}`), {
-    method: "DELETE"}
-    )
+  const handleDelete = () => {
+    removeListing( id )
+    fetch( 'http://localhost:6001/listings/' + id, { method: 'DELETE' } )
   }
   
   return (
@@ -35,7 +31,7 @@ function ListingCard({ listing }) {
         )}
         <strong>{description}</strong>
         <span> · {location}</span>
-        <button onClick={handleDelete} className="emoji-button delete" id={listing.id}>🗑</button>
+        <button onClick={handleDelete} className="emoji-button delete" id={id}>🗑</button>
       </div>
     </li>
   );
